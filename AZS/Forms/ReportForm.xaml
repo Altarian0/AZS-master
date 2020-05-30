@@ -1,0 +1,28 @@
+﻿<Window x:Class="AZS.Forms.ReportForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AZS.Forms"
+        mc:Ignorable="d"
+        Title="ReportForm" Height="450" Width="800">
+    <Grid>
+        <ComboBox x:Name="MagazineComboBox" HorizontalAlignment="Left" FontSize="18" Margin="10,53,0,0" VerticalAlignment="Top" Width="201" Height="28" SelectionChanged="MagazineComboBox_SelectionChanged">
+            <ComboBoxItem Content="Журнал продаж"/>
+            <ComboBoxItem Content="Журнал завозов"/>
+            <ComboBoxItem Content="Журнал смен"/>
+        </ComboBox>
+
+        <Label Content="Журналы:" FontSize="20" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="38" Width="201"/>
+        <Frame x:Name="InfoFrame" Margin="0,100,0,0" NavigationUIVisibility="Hidden"/>
+        <Button x:Name="ExportButton" Content="Экспорт" HorizontalAlignment="Left" Margin="631,10,0,0" VerticalAlignment="Top" Width="151" Height="38" Click="ExportButton_Click"/>
+        <RadioButton x:Name="ExcelRB" Content="Excel" HorizontalAlignment="Left" Margin="631,65,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <RadioButton x:Name="WordRB" Content="Word" HorizontalAlignment="Left" Margin="724,66,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <Grid Margin="216,0,334,319">
+            <DatePicker x:Name="MagazineDate" HorizontalAlignment="Left" FontSize="16" VerticalAlignment="Top" Margin="21,53,0,0" Height="28" Width="214"/>
+            <RadioButton x:Name="DayRB" Content="За день" HorizontalAlignment="Left" Margin="21,10,0,0" VerticalAlignment="Top" FontSize="14"/>
+            <RadioButton x:Name="MonthRB" Content="За месяц" HorizontalAlignment="Left" Margin="94,10,0,0" VerticalAlignment="Top" FontSize="14"/>
+            <RadioButton x:Name="YearRB" Content="За год" HorizontalAlignment="Left" Margin="176,10,0,0" VerticalAlignment="Top" FontSize="14"/>
+        </Grid>
+    </Grid>
+</Window>

@@ -1,0 +1,60 @@
+﻿<UserControl x:Class="AZS.Models.FuelControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:AZS.Models"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="1300" Loaded="UserControl_Loaded">
+    <UserControl.Resources>
+        <Style x:Name="FuelTrigger" TargetType="Button">
+            <Style.Triggers>
+                <Trigger Property="Content" Value="ДТ">
+                    <Setter Property="Foreground" Value="Red"/>
+                </Trigger>
+                <Trigger Property="Content" Value="Аи92">
+                    <Setter Property="Foreground" Value="Green"/>
+                </Trigger>
+                <Trigger Property="Content" Value="Аи95">
+                    <Setter Property="Foreground" Value="DarkOrange"/>
+                </Trigger>
+                <Trigger Property="Content" Value="А76">
+                    <Setter Property="Foreground" Value="DarkMagenta"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
+    <Grid Background="LightGray">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100"/>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding FuelColumn.Name}" FontSize="40"/>
+        </Grid>
+        <Grid Grid.Column="1">
+            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding FuelColumn.ColumnStatus.Name}" FontSize="40"/>
+        </Grid>
+        <Grid Grid.Column="2" >
+            <ListBox Name="FuelList" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Background="{x:Null}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal">
+                            
+                        </WrapPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid Height="140" Width="180">
+                            <Button x:Name="FuelSaleButton" FontSize="40" Content="{Binding Fuel.Name}" Click="FuelSaleButton_Click">
+                               
+                            </Button>
+                        </Grid>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+    </Grid>
+</UserControl>

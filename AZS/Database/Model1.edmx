@@ -1,0 +1,680 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="AZSModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ColumnStatus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Fuel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Balance" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Price" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="MaxValue" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FuelColumn">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ColumnStatusID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FuelDelivery">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="FuelID" Type="int" Nullable="false" />
+          <Property Name="Volume" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="FuelOfFuelColumn">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FuelID" Type="int" Nullable="false" />
+          <Property Name="ColumnID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FuelID" Type="int" Nullable="false" />
+          <Property Name="FuelColumnID" Type="int" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+          <Property Name="Datetime" Type="datetime" Nullable="false" />
+          <Property Name="FuelAmount" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Sum" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="SaleTypeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SaleType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Lastname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="RoleID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="WorkShift">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Datetime" Type="datetime" Nullable="false" />
+          <Property Name="UserID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_FuelColumn_ColumnStatus">
+          <End Role="ColumnStatus" Type="Self.ColumnStatus" Multiplicity="1" />
+          <End Role="FuelColumn" Type="Self.FuelColumn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ColumnStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FuelColumn">
+              <PropertyRef Name="ColumnStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FuelDelivery_Fuel">
+          <End Role="Fuel" Type="Self.Fuel" Multiplicity="1" />
+          <End Role="FuelDelivery" Type="Self.FuelDelivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fuel">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FuelDelivery">
+              <PropertyRef Name="FuelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FuelOfFuelColumn_Fuel">
+          <End Role="Fuel" Type="Self.Fuel" Multiplicity="1" />
+          <End Role="FuelOfFuelColumn" Type="Self.FuelOfFuelColumn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fuel">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FuelOfFuelColumn">
+              <PropertyRef Name="FuelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FuelOfFuelColumn_FuelColumn">
+          <End Role="FuelColumn" Type="Self.FuelColumn" Multiplicity="1" />
+          <End Role="FuelOfFuelColumn" Type="Self.FuelOfFuelColumn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FuelColumn">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FuelOfFuelColumn">
+              <PropertyRef Name="ColumnID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sale_Fuel">
+          <End Role="Fuel" Type="Self.Fuel" Multiplicity="1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fuel">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="FuelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sale_FuelColumn">
+          <End Role="FuelColumn" Type="Self.FuelColumn" Multiplicity="1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FuelColumn">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="FuelColumnID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sale_SaleType">
+          <End Role="SaleType" Type="Self.SaleType" Multiplicity="1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaleType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="SaleTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sale_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkShift_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="WorkShift" Type="Self.WorkShift" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WorkShift">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AZSModelStoreContainer">
+          <EntitySet Name="ColumnStatus" EntityType="Self.ColumnStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Fuel" EntityType="Self.Fuel" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FuelColumn" EntityType="Self.FuelColumn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FuelDelivery" EntityType="Self.FuelDelivery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="FuelOfFuelColumn" EntityType="Self.FuelOfFuelColumn" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sale" EntityType="Self.Sale" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SaleType" EntityType="Self.SaleType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WorkShift" EntityType="Self.WorkShift" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_FuelColumn_ColumnStatus" Association="Self.FK_FuelColumn_ColumnStatus">
+            <End Role="ColumnStatus" EntitySet="ColumnStatus" />
+            <End Role="FuelColumn" EntitySet="FuelColumn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FuelDelivery_Fuel" Association="Self.FK_FuelDelivery_Fuel">
+            <End Role="Fuel" EntitySet="Fuel" />
+            <End Role="FuelDelivery" EntitySet="FuelDelivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FuelOfFuelColumn_Fuel" Association="Self.FK_FuelOfFuelColumn_Fuel">
+            <End Role="Fuel" EntitySet="Fuel" />
+            <End Role="FuelOfFuelColumn" EntitySet="FuelOfFuelColumn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FuelOfFuelColumn_FuelColumn" Association="Self.FK_FuelOfFuelColumn_FuelColumn">
+            <End Role="FuelColumn" EntitySet="FuelColumn" />
+            <End Role="FuelOfFuelColumn" EntitySet="FuelOfFuelColumn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sale_Fuel" Association="Self.FK_Sale_Fuel">
+            <End Role="Fuel" EntitySet="Fuel" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sale_FuelColumn" Association="Self.FK_Sale_FuelColumn">
+            <End Role="FuelColumn" EntitySet="FuelColumn" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sale_SaleType" Association="Self.FK_Sale_SaleType">
+            <End Role="SaleType" EntitySet="SaleType" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sale_User" Association="Self.FK_Sale_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkShift_User" Association="Self.FK_WorkShift_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="WorkShift" EntitySet="WorkShift" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AZSModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ColumnStatus">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="FuelColumn" Relationship="Self.FK_FuelColumn_ColumnStatus" FromRole="ColumnStatus" ToRole="FuelColumn" />
+        </EntityType>
+        <EntityType Name="Fuel">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Balance" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="MaxValue" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="FuelDelivery" Relationship="Self.FK_FuelDelivery_Fuel" FromRole="Fuel" ToRole="FuelDelivery" />
+          <NavigationProperty Name="FuelOfFuelColumn" Relationship="Self.FK_FuelOfFuelColumn_Fuel" FromRole="Fuel" ToRole="FuelOfFuelColumn" />
+          <NavigationProperty Name="Sale" Relationship="Self.FK_Sale_Fuel" FromRole="Fuel" ToRole="Sale" />
+        </EntityType>
+        <EntityType Name="FuelColumn">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ColumnStatusID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ColumnStatus" Relationship="Self.FK_FuelColumn_ColumnStatus" FromRole="FuelColumn" ToRole="ColumnStatus" />
+          <NavigationProperty Name="FuelOfFuelColumn" Relationship="Self.FK_FuelOfFuelColumn_FuelColumn" FromRole="FuelColumn" ToRole="FuelOfFuelColumn" />
+          <NavigationProperty Name="Sale" Relationship="Self.FK_Sale_FuelColumn" FromRole="FuelColumn" ToRole="Sale" />
+        </EntityType>
+        <EntityType Name="FuelDelivery">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FuelID" Type="Int32" Nullable="false" />
+          <Property Name="Volume" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Fuel" Relationship="Self.FK_FuelDelivery_Fuel" FromRole="FuelDelivery" ToRole="Fuel" />
+        </EntityType>
+        <EntityType Name="FuelOfFuelColumn">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FuelID" Type="Int32" Nullable="false" />
+          <Property Name="ColumnID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Fuel" Relationship="Self.FK_FuelOfFuelColumn_Fuel" FromRole="FuelOfFuelColumn" ToRole="Fuel" />
+          <NavigationProperty Name="FuelColumn" Relationship="Self.FK_FuelOfFuelColumn_FuelColumn" FromRole="FuelOfFuelColumn" ToRole="FuelColumn" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_User_Role" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Sale">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FuelID" Type="Int32" Nullable="false" />
+          <Property Name="FuelColumnID" Type="Int32" Nullable="false" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <Property Name="Datetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FuelAmount" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Sum" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
+          <Property Name="SaleTypeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Fuel" Relationship="Self.FK_Sale_Fuel" FromRole="Sale" ToRole="Fuel" />
+          <NavigationProperty Name="FuelColumn" Relationship="Self.FK_Sale_FuelColumn" FromRole="Sale" ToRole="FuelColumn" />
+          <NavigationProperty Name="SaleType" Relationship="Self.FK_Sale_SaleType" FromRole="Sale" ToRole="SaleType" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Sale_User" FromRole="Sale" ToRole="User" />
+        </EntityType>
+        <EntityType Name="SaleType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Sale" Relationship="Self.FK_Sale_SaleType" FromRole="SaleType" ToRole="Sale" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Lastname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoleID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="Self.FK_User_Role" FromRole="User" ToRole="Role" />
+          <NavigationProperty Name="Sale" Relationship="Self.FK_Sale_User" FromRole="User" ToRole="Sale" />
+          <NavigationProperty Name="WorkShift" Relationship="Self.FK_WorkShift_User" FromRole="User" ToRole="WorkShift" />
+        </EntityType>
+        <EntityType Name="WorkShift">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Datetime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="UserID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK_WorkShift_User" FromRole="WorkShift" ToRole="User" />
+        </EntityType>
+        <Association Name="FK_FuelColumn_ColumnStatus">
+          <End Role="ColumnStatus" Type="Self.ColumnStatus" Multiplicity="1" />
+          <End Role="FuelColumn" Type="Self.FuelColumn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ColumnStatus">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FuelColumn">
+              <PropertyRef Name="ColumnStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FuelDelivery_Fuel">
+          <End Role="Fuel" Type="Self.Fuel" Multiplicity="1" />
+          <End Role="FuelDelivery" Type="Self.FuelDelivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fuel">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FuelDelivery">
+              <PropertyRef Name="FuelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FuelOfFuelColumn_Fuel">
+          <End Role="Fuel" Type="Self.Fuel" Multiplicity="1" />
+          <End Role="FuelOfFuelColumn" Type="Self.FuelOfFuelColumn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fuel">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FuelOfFuelColumn">
+              <PropertyRef Name="FuelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sale_Fuel">
+          <End Role="Fuel" Type="Self.Fuel" Multiplicity="1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Fuel">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="FuelID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_FuelOfFuelColumn_FuelColumn">
+          <End Role="FuelColumn" Type="Self.FuelColumn" Multiplicity="1" />
+          <End Role="FuelOfFuelColumn" Type="Self.FuelOfFuelColumn" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FuelColumn">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="FuelOfFuelColumn">
+              <PropertyRef Name="ColumnID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sale_FuelColumn">
+          <End Role="FuelColumn" Type="Self.FuelColumn" Multiplicity="1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="FuelColumn">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="FuelColumnID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Role">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="RoleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sale_SaleType">
+          <End Role="SaleType" Type="Self.SaleType" Multiplicity="1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SaleType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="SaleTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sale_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Sale" Type="Self.Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_WorkShift_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="WorkShift" Type="Self.WorkShift" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="WorkShift">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AZSEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ColumnStatus" EntityType="Self.ColumnStatus" />
+          <EntitySet Name="Fuel" EntityType="Self.Fuel" />
+          <EntitySet Name="FuelColumn" EntityType="Self.FuelColumn" />
+          <EntitySet Name="FuelDelivery" EntityType="Self.FuelDelivery" />
+          <EntitySet Name="FuelOfFuelColumn" EntityType="Self.FuelOfFuelColumn" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="Sale" EntityType="Self.Sale" />
+          <EntitySet Name="SaleType" EntityType="Self.SaleType" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <EntitySet Name="WorkShift" EntityType="Self.WorkShift" />
+          <AssociationSet Name="FK_FuelColumn_ColumnStatus" Association="Self.FK_FuelColumn_ColumnStatus">
+            <End Role="ColumnStatus" EntitySet="ColumnStatus" />
+            <End Role="FuelColumn" EntitySet="FuelColumn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FuelDelivery_Fuel" Association="Self.FK_FuelDelivery_Fuel">
+            <End Role="Fuel" EntitySet="Fuel" />
+            <End Role="FuelDelivery" EntitySet="FuelDelivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FuelOfFuelColumn_Fuel" Association="Self.FK_FuelOfFuelColumn_Fuel">
+            <End Role="Fuel" EntitySet="Fuel" />
+            <End Role="FuelOfFuelColumn" EntitySet="FuelOfFuelColumn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sale_Fuel" Association="Self.FK_Sale_Fuel">
+            <End Role="Fuel" EntitySet="Fuel" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_FuelOfFuelColumn_FuelColumn" Association="Self.FK_FuelOfFuelColumn_FuelColumn">
+            <End Role="FuelColumn" EntitySet="FuelColumn" />
+            <End Role="FuelOfFuelColumn" EntitySet="FuelOfFuelColumn" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sale_FuelColumn" Association="Self.FK_Sale_FuelColumn">
+            <End Role="FuelColumn" EntitySet="FuelColumn" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sale_SaleType" Association="Self.FK_Sale_SaleType">
+            <End Role="SaleType" EntitySet="SaleType" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sale_User" Association="Self.FK_Sale_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WorkShift_User" Association="Self.FK_WorkShift_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="WorkShift" EntitySet="WorkShift" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AZSModelStoreContainer" CdmEntityContainer="AZSEntities">
+          <EntitySetMapping Name="ColumnStatus">
+            <EntityTypeMapping TypeName="AZSModel.ColumnStatus">
+              <MappingFragment StoreEntitySet="ColumnStatus">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Fuel">
+            <EntityTypeMapping TypeName="AZSModel.Fuel">
+              <MappingFragment StoreEntitySet="Fuel">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Balance" ColumnName="Balance" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="MaxValue" ColumnName="MaxValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FuelColumn">
+            <EntityTypeMapping TypeName="AZSModel.FuelColumn">
+              <MappingFragment StoreEntitySet="FuelColumn">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ColumnStatusID" ColumnName="ColumnStatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FuelDelivery">
+            <EntityTypeMapping TypeName="AZSModel.FuelDelivery">
+              <MappingFragment StoreEntitySet="FuelDelivery">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="FuelID" ColumnName="FuelID" />
+                <ScalarProperty Name="Volume" ColumnName="Volume" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FuelOfFuelColumn">
+            <EntityTypeMapping TypeName="AZSModel.FuelOfFuelColumn">
+              <MappingFragment StoreEntitySet="FuelOfFuelColumn">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FuelID" ColumnName="FuelID" />
+                <ScalarProperty Name="ColumnID" ColumnName="ColumnID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="AZSModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sale">
+            <EntityTypeMapping TypeName="AZSModel.Sale">
+              <MappingFragment StoreEntitySet="Sale">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="FuelID" ColumnName="FuelID" />
+                <ScalarProperty Name="FuelColumnID" ColumnName="FuelColumnID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+                <ScalarProperty Name="FuelAmount" ColumnName="FuelAmount" />
+                <ScalarProperty Name="Sum" ColumnName="Sum" />
+                <ScalarProperty Name="SaleTypeID" ColumnName="SaleTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SaleType">
+            <EntityTypeMapping TypeName="AZSModel.SaleType">
+              <MappingFragment StoreEntitySet="SaleType">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="AZSModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Lastname" ColumnName="Lastname" />
+                <ScalarProperty Name="Login" ColumnName="Login" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WorkShift">
+            <EntityTypeMapping TypeName="AZSModel.WorkShift">
+              <MappingFragment StoreEntitySet="WorkShift">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Datetime" ColumnName="Datetime" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

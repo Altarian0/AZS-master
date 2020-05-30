@@ -1,0 +1,116 @@
+﻿<Window x:Class="AZS.Forms.DeliveryFuelForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AZS.Forms"
+        mc:Ignorable="d"
+        Title="DeliveryFuelForm" Height="450" Width="800">
+    <Window.Resources>
+        <Style x:Key="LabelFuelValue" TargetType="Label">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding FuelVisual}" Value="false">
+                    <Setter Property="Visibility" Value="Hidden"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="NextButton" TargetType="Button">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding FuelColumnControl.Fuel.ID}" Value="4">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="PrevButton" TargetType="Button">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding FuelColumnControl.Fuel.ID}" Value="1">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="550"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid>
+            <Label Content="{Binding Fuel.Name}" FontSize="24" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="25,10,0,0"/>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Ellipse Stroke="Black" StrokeThickness="1" Width="200" Height="200"/>
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="{Binding FillValue}" FontSize="40"/>
+                <Label HorizontalAlignment="Center" VerticalAlignment="Center" Content="%" FontSize="40" Margin="80,0,0,0"/>
+                <Label  Content="Мало нефтепродуктов!" Style="{StaticResource LabelFuelValue}" Width="auto" FontSize="18" FontWeight="Bold" Foreground="Green" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,40"/>
+                <Grid HorizontalAlignment="Right" Width="215" Margin="0,0,45,0" Grid.Column="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <TextBlock Text="{Binding Reception}" FontSize="18" TextAlignment="Right" Padding="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="25" Background="LightGreen" Margin="0,0,5,0"/>
+                        <TextBlock Text="Прием, л:" FontSize="18" Padding="0,0,10,0" TextAlignment="Right" HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" Height="25"/>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <TextBlock Text="{Binding Shipment}" FontSize="18" TextAlignment="Right"  Padding="0,0,10,0" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="25" Background="LightGreen" Margin="0,0,5,0"/>
+                        <TextBlock Text="Отгрузка, л:" FontSize="18" Padding="0,0,10,0" TextAlignment="Right" HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" Height="25"/>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <TextBlock Text="{Binding Balance}" TextAlignment="Right"  Padding="0,0,10,0" FontSize="18" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="25" Background="LightGreen" Margin="0,0,5,0"/>
+                        <TextBlock Text="Всего(из), л:" FontSize="18" Padding="0,0,10,0" TextAlignment="Right" HorizontalAlignment="Left" VerticalAlignment="Center" Width="100" Height="25"/>
+                    </Grid>
+                    <Grid Grid.Row="3">
+                        <TextBlock Text="{Binding Balance}" TextAlignment="Right" Padding="0,0,10,0" FontSize="18" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="25" Background="LightGreen" Margin="0,0,5,0"/>
+                        <TextBlock Text="Всего(рас), л:" FontSize="18" Padding="0,0,10,0" TextAlignment="Right" HorizontalAlignment="Left" VerticalAlignment="Center" Width="110" Height="26" Margin="0,12"/>
+                    </Grid>
+                    <Grid Grid.Row="4">
+                        <TextBlock Text="-" TextAlignment="Right" Padding="0,0,10,0" FontSize="18" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="25" Background="LightGreen" Margin="0,0,5,0"/>
+                        <TextBlock Text="Масса:" FontSize="18" Padding="0,0,10,0" TextAlignment="Right" HorizontalAlignment="Left" VerticalAlignment="Center" Width="110" Height="26" Margin="0,12"/>
+                    </Grid>
+                    <Grid Grid.Row="5">
+                        <TextBlock Text="-" TextAlignment="Right" Padding="0,0,10,0" FontSize="18" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="25" Background="LightGreen" Margin="0,0,5,0"/>
+                        <TextBlock Text="Плотн:" FontSize="18" Padding="0,0,10,0" TextAlignment="Right" HorizontalAlignment="Left" VerticalAlignment="Center" Width="110" Height="26" Margin="0,12"/>
+                    </Grid>
+                    <Grid Grid.Row="6">
+                        <TextBlock Text="-" TextAlignment="Right" Padding="0,0,10,0" FontSize="18" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="25" Background="LightGreen" Margin="0,0,5,0"/>
+                        <TextBlock Text="Температура:" FontSize="18" Padding="0,0,10,0" TextAlignment="Right" HorizontalAlignment="Left" VerticalAlignment="Center" Width="110" Height="26" Margin="0,12"/>
+                    </Grid>
+                    <Grid Grid.Row="7">
+                        <TextBlock Text="40мм" TextAlignment="Right" Padding="0,0,10,0" FontSize="18" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="25" Background="LightGreen" Margin="0,0,5,0"/>
+                        <TextBlock Text="Мертв. ост.:" FontSize="18" Padding="0,0,10,0" TextAlignment="Right" HorizontalAlignment="Left" VerticalAlignment="Center" Width="110" Height="26" Margin="0,12"/>
+                    </Grid>
+
+                </Grid>
+
+            </Grid>
+
+        </Grid>
+        <Grid Grid.Column="1">
+            <Label VerticalAlignment="Top" Content="Топливо:" FontSize="20"/>
+            <ComboBox x:Name="FuelComboBox" FontSize="16" DisplayMemberPath="Name" VerticalAlignment="Top" HorizontalAlignment="Center" Width="200" Height="30" Margin="0,40,0,0" SelectionChanged="FuelComboBox_SelectionChanged"/>
+
+            <Grid Margin="0,70,0,0" VerticalAlignment="Center">
+                <TextBlock Text="Литров:" VerticalAlignment="Center" FontSize="18" HorizontalAlignment="Left" Margin="10,0,0,0"/>
+                <TextBox x:Name="FuelValueBox" Width="130" Margin="0,0,20,0" VerticalAlignment="Center" FontSize="18" HorizontalAlignment="Right"/>
+            </Grid>
+            <Grid Grid.Row="3">
+                <TextBlock Text="{Binding Fuel.MaxValue}" TextAlignment="Right" Padding="0,0,10,0" FontSize="18" HorizontalAlignment="Right" VerticalAlignment="Center" Width="100" Height="25" Background="LightGreen" Margin="0,0,5,0"/>
+                <TextBlock Text="Макс. объем" FontSize="18" Padding="0,0,10,0" TextAlignment="Right" HorizontalAlignment="Left" VerticalAlignment="Center" Width="122" Height="26" Margin="0,196,0,197"/>
+            </Grid>
+
+            <Button x:Name="ConfirmButton" IsEnabled="False" Content="Подтвердить" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="100" Height="30" Margin="10,0,0,20" Click="ConfirmButton_Click"/>
+            <Button x:Name="CancelButton" Content="Отмена" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="100" Height="30" Margin="0,0,10,20" Click="CancelButton_Click"/>
+        </Grid>
+    </Grid>
+</Window>

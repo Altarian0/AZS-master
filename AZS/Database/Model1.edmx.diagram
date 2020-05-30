@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="8bfeaef07ba543adb9977670d5d30298" Name="Diagram1">
+        <EntityTypeShape EntityType="AZSModel.ColumnStatus" Width="1.5" PointX="1.5" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="AZSModel.Fuel" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="AZSModel.FuelColumn" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AZSModel.FuelDelivery" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AZSModel.FuelOfFuelColumn" Width="1.5" PointX="3" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="AZSModel.Role" Width="1.5" PointX="1.5" PointY="11.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AZSModel.Sale" Width="1.5" PointX="6" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="AZSModel.SaleType" Width="1.5" PointX="3.75" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="AZSModel.User" Width="1.5" PointX="3.75" PointY="10.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="AZSModel.WorkShift" Width="1.5" PointX="6" PointY="11.125" IsExpanded="true" />
+        <AssociationConnector Association="AZSModel.FK_FuelColumn_ColumnStatus" ManuallyRouted="false" />
+        <AssociationConnector Association="AZSModel.FK_FuelDelivery_Fuel" ManuallyRouted="false" />
+        <AssociationConnector Association="AZSModel.FK_FuelOfFuelColumn_Fuel" ManuallyRouted="false" />
+        <AssociationConnector Association="AZSModel.FK_Sale_Fuel" ManuallyRouted="false" />
+        <AssociationConnector Association="AZSModel.FK_FuelOfFuelColumn_FuelColumn" ManuallyRouted="false" />
+        <AssociationConnector Association="AZSModel.FK_Sale_FuelColumn" ManuallyRouted="false" />
+        <AssociationConnector Association="AZSModel.FK_User_Role" ManuallyRouted="false" />
+        <AssociationConnector Association="AZSModel.FK_Sale_SaleType" ManuallyRouted="false" />
+        <AssociationConnector Association="AZSModel.FK_Sale_User" ManuallyRouted="false" />
+        <AssociationConnector Association="AZSModel.FK_WorkShift_User" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
